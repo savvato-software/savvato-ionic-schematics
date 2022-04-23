@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { IonicPageModule } from 'ionic-angular';
+import { IonicModule } from '@ionic/angular';
+
+import { <%= classify(name) %>PageRoutingModule } from './<%= dasherize(name) %>-routing.module';
 
 import { <%= classify(name) %>Page } from './<%= dasherize(name) %>.page';
 
 @NgModule({
-  declarations: [<%= classify(name) %>Page],
   imports: [
-    IonicPageModule.forChild(<%= classify(name) %>Page)
-  ]
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    <%= classify(name) %>PageRoutingModule
+  ],
+  declarations: [<%= classify(name) %>Page]
 })
 export class <%= classify(name) %>PageModule {}
