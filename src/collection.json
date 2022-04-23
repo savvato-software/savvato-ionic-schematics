@@ -1,0 +1,11 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "page": {
+      "aliases": [ "p" ],
+      "factory": "./page",
+      "description": "Create a page.",
+      "schema": "./page/schema.json"
+    }
+  }
+}
