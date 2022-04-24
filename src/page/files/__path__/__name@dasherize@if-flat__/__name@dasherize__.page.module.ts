@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { <%= classify(name) %>PageRoutingModule } from './<%= dasherize(name) %>-routing.module';
+import { <%= classify(name) %>PageRoutingModule } from './<%= dasherize(name) %>.page-routing.module';
 
 import { <%= classify(name) %>Page } from './<%= dasherize(name) %>.page';
 
