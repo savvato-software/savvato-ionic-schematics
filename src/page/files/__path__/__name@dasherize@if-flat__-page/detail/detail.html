@@ -1,0 +1,25 @@
+<ion-header no-border>
+
+    <ion-navbar transparent>
+        <ion-title>
+            Detail <%= classify(name) %> Page
+        </ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<div *ngIf="!!model">{{model.name}}<br/></div>
+<div *ngIf="!!model">{{model.description}}<br/></div>
+
+<br/>
+
+<div>
+    <button color="primary"
+            class="list-<%= dasherize(name) %>s-field" (click)="on<%= classify(name) %>sPageBtnClick()" >
+        <%= classify(name) %> Page
+    </button>
+    <button color="primary"
+            (click)="onEditBtnClick()" type="submit">
+        Edit
+    </button>
+</div>

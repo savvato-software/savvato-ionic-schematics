@@ -1,0 +1,46 @@
+<ion-header no-border>
+
+    <ion-navbar transparent>
+        <ion-title>
+            Create <%= classify(name) %> Page
+        </ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+    <form [formGroup]="validationsForm" (ngSubmit)="onSaveBtnClicked()">
+        <ion-item>
+            <ion-label position="floating" color="primary">Name</ion-label>
+            <ion-input data-test="name-input" type="text" formControlName="name" (ionInput)="onNameChange($event)" [value]="getName()" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.name">
+                <div class="error-message" *ngIf="validationsForm.get('name').hasError(validation.type) && (validationsForm.get('name').dirty || validationsForm.get('name').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+        <ion-item>
+            <ion-label position="floating" color="primary">Description</ion-label>
+            <ion-input data-test="name-input" type="text" formControlName="description" (ionInput)="onDescriptionChange($event)" [value]="getDescription()" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+            <ng-container *ngFor="let validation of validationMessages.description">
+                <div class="error-message" *ngIf="validationsForm.get('description').hasError(validation.type) && (validationsForm.get('description').dirty || validationsForm.get('description').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                </div>
+            </ng-container>
+        </div>
+    </form>
+    <button mat-raised-button color="primary"
+            class="list-ideas-field" (click)="on<%= classify(name) %>sPageBtnClick()" >
+        <%= classify(name) %> Page
+    </button>
+    <button mat-raised-button color="primary"
+            class="submit-field" (click)="submit(name, description)" type="submit">
+        Submit
+    </button>
+</ion-content>
+
+</div>

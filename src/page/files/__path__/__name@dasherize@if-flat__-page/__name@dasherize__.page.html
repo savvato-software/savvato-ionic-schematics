@@ -2,7 +2,7 @@
 
   <ion-navbar transparent>
     <ion-title>
-      <%= classify(name) %> Page
+      List All <%= classify(name) %>s Page
     </ion-title>
   </ion-navbar>
 
@@ -10,8 +10,25 @@
 
 <ion-content padding>
 
-  <p>
-    Nothing to See Here... Move Along... Move Along
-  </p>
+    <!-- This page lists all the <%= dasherize(name) %>s. You will be able to see all the other users <%= dasherize(name) %>s, filter the list, search the list,
+     and select an <%= dasherize(name) %> to view its detail. -->
+
+    <div *ngFor="let <%= dasherize(name) %> of getListOf<%= classify(name) %>s()" (click)="on<%= classify(name) %>Click(<%= dasherize(name) %>)">
+      User: {{<%= dasherize(name) %>['user']['name']}}<br/>
+      <%= classify(name) %>: {{<%= dasherize(name) %>['<%= dasherize(name) %>']['name']}}<br/>
+      <br/>
+    </div>
+
+    <hr>
+    <div>
+        <button color="primary"
+                class="new-<%= dasherize(name) %>-field" (click)="onHomeBtnClick()" type="submit">
+          Home
+        </button>
+        <button color="primary"
+                class="new-<%= dasherize(name) %>-field" (click)="onNew<%= classify(name) %>BtnClick()" type="submit">
+          New <%= classify(name) %>
+        </button>
+    </div>
 
 </ion-content>
