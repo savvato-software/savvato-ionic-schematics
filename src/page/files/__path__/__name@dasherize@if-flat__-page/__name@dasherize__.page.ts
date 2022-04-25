@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: '<%= selector %>',
   templateUrl: './<%= dasherize(name) %>.page.html',
-  styleUrls: ['./<%= dasherize(name) %>.page.scss']
+  styleUrls: ['./<%= dasherize(name) %>.page.<%= styleext %>']
 })
 export class <%= classify(name) %>Page implements OnInit, OnDestroy {
 

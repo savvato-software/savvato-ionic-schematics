@@ -1,13 +1,13 @@
-import { Page, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
 
-@Page({
+@Component({
     selector: '<%= selector %>-detail',
     templateUrl: './detail.html',
-    styleUrls: ['./detail.sass']
+    styleUrls: ['./detail.<%= styleext %>']
 })
 export class Detail<%= classify(name) %>Page implements OnInit {
 

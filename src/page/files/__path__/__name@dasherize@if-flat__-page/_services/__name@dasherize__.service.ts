@@ -13,9 +13,9 @@ export class <%= classify(name) %>Service {
 
     }
 
-    create(name) {
+    create(name, description) {
         const url = environment.apiUrl + '/api/<%= dasherize(name) %>/new';
-        let data = {'name': name};
+        let data = {'name': name, 'description': description};
 
         const rtn = new Promise(
             (resolve, reject) => {
@@ -52,9 +52,9 @@ export class <%= classify(name) %>Service {
         return rtn;
     }
 
-    save(model) %>) {
-        const url = environment.apiUrl + '/api//<%= dasherize(name) %>/' + model['id'];
-        let data = {'name': model['name']};
+    save(model) {
+        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/' + model['id'];
+        let data = {'name': model['name'], 'description': model['description']};
 
         const rtn = new Promise(
             (resolve, reject) => {

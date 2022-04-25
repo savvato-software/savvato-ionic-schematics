@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
@@ -6,9 +7,10 @@ import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %
 @Component({
     selector: '<%= selector %>-edit',
     templateUrl: './edit.html',
-    styleUrls: ['./edit.scss']
+    styleUrls: ['./edit.<%= styleext %>']
 })
-export class Edit<%= classify(name) %>Page implements OnInit {
+export class Edit<%= classify(name) %>Page implements OnInit
+{
 
     model: any = undefined;
 
@@ -18,8 +20,11 @@ export class Edit<%= classify(name) %>Page implements OnInit {
 
     validationsForm: FormGroup;
 
+    dirty: boolean = false;
+
     constructor(private route: ActivatedRoute,
         private router: Router,
+        private formBuilder: FormBuilder,
         private _<%= camelize(name) %>Service: <%= classify(name) %>Service) {
 
     }
@@ -33,12 +38,12 @@ export class Edit<%= classify(name) %>Page implements OnInit {
         ]
     };
 
-    ngOnInit(): void {
+    ngOnInit() {
        const self = this;
 
        const id = this.route.snapshot.params.id;
 
-       this.<%= classify(name) %>Service.getById(id).
+       this._<%= camelize(name) %>Service.getById(id).
             then((response) => {
                 self.model = response;
 
@@ -75,7 +80,8 @@ export class Edit<%= classify(name) %>Page implements OnInit {
     onSaveBtnClicked() {
         const self = this;
         let obj = Object.assign( {}, this.model );
-        this._<%= classify(name) %>Service.save(obj).then((rtnobj) => {
+        this._<%= camelize(name) %>Service.save(obj).then((rtnobj) => {
             self.dirty = false;
         })
     }
+}
