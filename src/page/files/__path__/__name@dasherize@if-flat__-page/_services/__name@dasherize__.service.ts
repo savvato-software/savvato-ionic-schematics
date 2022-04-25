@@ -40,7 +40,26 @@ export class <%= classify(name) %>Service {
             (resolve, reject) => {
                 this._apiService.get(url).subscribe(
                     (_data) => {
-                        console.log('Read <%= classify(name) %> operation completed!');
+                        console.log('Read ' + id + ' <%= classify(name) %> operation completed!');
+                        console.log(_data);
+
+                        resolve(_data);
+                    }, (err) => {
+                        reject(err);
+                    });
+            });
+
+        return rtn;
+    }
+
+    getAll() {
+        const url = environment.apiUrl + '/api/<%= dasherize(name) %>';
+
+        const rtn = new Promise(
+            (resolve, reject) => {
+                this._apiService.get(url).subscribe(
+                    (_data) => {
+                        console.log('Read All <%= classify(name) %> operation completed!');
                         console.log(_data);
 
                         resolve(_data);
