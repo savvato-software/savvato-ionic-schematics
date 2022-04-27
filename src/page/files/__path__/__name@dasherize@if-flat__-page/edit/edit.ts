@@ -3,6 +3,7 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
+import { AlertService } from '../../../_services/alert/alert.service'
 
 @Component({
     selector: '<%= dasherize(name) %>-edit',
@@ -22,7 +23,8 @@ export class Edit<%= classify(name) %>Page implements OnInit
     constructor(private route: ActivatedRoute,
         private router: Router,
         private formBuilder: FormBuilder,
-        private _<%= camelize(name) %>Service: <%= classify(name) %>Service) {
+        private _<%= camelize(name) %>Service: <%= classify(name) %>Service,
+        private _alertService: AlertService) {
 
     }
 
@@ -72,11 +74,22 @@ export class Edit<%= classify(name) %>Page implements OnInit
         return this.model['description'];
     }
 
-    onSaveBtnClicked() {
+    onSaveBtnClicked()
+    {
         const self = this;
-        let obj = Object.assign( {}, this.model );
+        let obj = Object.assign({}, this.model);
+
         this._<%= camelize(name) %>Service.save(obj).then((rtnobj) => {
-            self.dirty = false;
+            self._alertService.show({
+                header: 'Alright!',
+                message: "Your <%= classify(name) %> changes were saved!",
+                buttons: [
+                    {
+                        text: 'OK', role: 'cancel', handler: () => {
+                            self.dirty = false;
+                        }
+                    }]
+            })
         })
     }
 
