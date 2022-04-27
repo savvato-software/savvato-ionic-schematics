@@ -1,11 +1,7 @@
-<ion-header no-border>
-
-    <ion-navbar transparent>
-        <ion-title>
-            Edit <%= classify(name) %> Page
-        </ion-title>
-    </ion-navbar>
-
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Edit <%= classify(name) %> Page</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
@@ -33,4 +29,12 @@
             </ng-container>
         </div>
     </form>
+    <button mat-raised-button color="primary"
+            class="list-ideas-field" (click)="on<%= classify(name) %>sPageBtnClick()" >
+        <%= classify(name) %> Page
+    </button>
+    <button mat-raised-button color="primary"
+            class="submit-field" (click)="onSaveBtnClicked(name, description)" type="submit">
+        Submit
+    </button>
 </ion-content>

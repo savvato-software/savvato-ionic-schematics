@@ -73,11 +73,11 @@ export class <%= classify(name) %>Service {
 
     save(model) {
         const url = environment.apiUrl + '/api/<%= dasherize(name) %>/' + model['id'];
-        let data = {'name': model['name'], 'description': model['description']};
+        let data = {'id': model['id'], 'name': model['name'], 'description': model['description']};
 
         const rtn = new Promise(
             (resolve, reject) => {
-                this._apiService.post(url, data).subscribe(
+                this._apiService.put(url, data).subscribe(
                     (_data) => {
                         console.log('Saved <%= classify(name) %> ' + model['id']);
                         console.log(_data);

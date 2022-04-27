@@ -12,15 +12,12 @@ import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %
 export class Edit<%= classify(name) %>Page implements OnInit
 {
 
-    model: any = undefined;
-
-    name: string = '';
-    description: string = '';
-    errorMessage: string = '';
+    model: any = [];
 
     validationsForm: FormGroup;
 
     dirty: boolean = false;
+    initComplete: boolean = false;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
@@ -46,9 +43,7 @@ export class Edit<%= classify(name) %>Page implements OnInit
        this._<%= camelize(name) %>Service.getById(id).
             then((response) => {
                 self.model = response;
-
-                self.name = self.model.name;
-                self.description = self.model.description;
+                self.initComplete = true;
             })
 
        this.validationsForm = this.formBuilder.group({
@@ -83,5 +78,9 @@ export class Edit<%= classify(name) %>Page implements OnInit
         this._<%= camelize(name) %>Service.save(obj).then((rtnobj) => {
             self.dirty = false;
         })
+    }
+
+    on<%= classify(name) %>sPageBtnClick() {
+        this.router.navigate(['/<%= dasherize(name) %>']);
     }
 }

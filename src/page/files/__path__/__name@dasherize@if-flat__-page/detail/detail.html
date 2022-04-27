@@ -1,11 +1,7 @@
-<ion-header no-border>
-
-    <ion-navbar transparent>
-        <ion-title>
-            Detail <%= classify(name) %> Page
-        </ion-title>
-    </ion-navbar>
-
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Detail <%= classify(name) %> Page</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <div *ngIf="!!model">{{model.name}}<br/></div>
