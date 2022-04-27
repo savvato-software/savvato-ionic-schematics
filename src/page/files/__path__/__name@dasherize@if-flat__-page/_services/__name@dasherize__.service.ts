@@ -14,7 +14,7 @@ export class <%= classify(name) %>Service {
     }
 
     create(name, description) {
-        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/new';
+        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/create';
         let data = {'name': name, 'description': description};
 
         const rtn = new Promise(

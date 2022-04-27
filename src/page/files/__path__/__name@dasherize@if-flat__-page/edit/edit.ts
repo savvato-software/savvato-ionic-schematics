@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
 
 @Component({
-    selector: '<%= selector %>-edit',
+    selector: '<%= dasherize(name) %>-edit',
     templateUrl: './edit.html',
     styleUrls: ['./edit.<%= styleext %>']
 })

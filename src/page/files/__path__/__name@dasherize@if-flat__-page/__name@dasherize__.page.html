@@ -10,7 +10,7 @@
      and select an <%= dasherize(name) %> to view its detail. -->
 
     <div *ngFor="let <%= dasherize(name) %> of getListOf<%= classify(name) %>s()" (click)="on<%= classify(name) %>Click(<%= dasherize(name) %>)">
-      User: {{<%= dasherize(name) %>['user']['name']}}<br/>
+      User: {{<%= dasherize(name) %>['userName']}}<br/>
       <%= classify(name) %>: {{<%= dasherize(name) %>['<%= dasherize(name) %>']['name']}}<br/>
       <br/>
     </div>
