@@ -38,15 +38,8 @@ export class Edit<%= classify(name) %>Page implements OnInit
     };
 
     ngOnInit() {
-       const self = this;
-
        const id = this.route.snapshot.params.id;
-
-       this._<%= camelize(name) %>Service.getById(id).
-            then((response) => {
-                self.model = response;
-                self.initComplete = true;
-            })
+       this._<%= camelize(name) %>ModelService.init(id);
 
        this.validationsForm = this.formBuilder.group({
             name: new FormControl('', Validators.required),
@@ -55,34 +48,33 @@ export class Edit<%= classify(name) %>Page implements OnInit
     }
 
     onNameChange($event) {
-        this.model['name'] = $event.currentTarget.value;
+        this._<%= camelize(name) %>ModelService.get()['name'] = $event.currentTarget.value;
 
         this.dirty = true;
     }
 
     getName() {
-        return this.model['name'];
+        return this._<%= camelize(name) %>ModelService.get()['name'];
     }
 
     onDescriptionChange($event) {
-        this.model['description'] = $event.currentTarget.value;
+        this._<%= camelize(name) %>ModelService.get()['description'] = $event.currentTarget.value;
 
         this.dirty = true;
     }
 
     getDescription() {
-        return this.model['description'];
+        return this._<%= camelize(name) %>ModelService.get()['description'];
     }
 
     onSaveBtnClicked()
     {
         const self = this;
-        let obj = Object.assign({}, this.model);
 
-        this._<%= camelize(name) %>Service.save(obj).then((rtnobj) => {
+        this._<%= camelize(name) %>ModelService.save().then((rtnobj) => {
             self._alertService.show({
                 header: 'Alright!',
-                message: "Your <%= classify(name) %> changes were saved!",
+                message: "Your Topic changes were saved!",
                 buttons: [
                     {
                         text: 'OK', role: 'cancel', handler: () => {
