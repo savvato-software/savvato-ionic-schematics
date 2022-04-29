@@ -17,14 +17,8 @@
 
     <hr>
     <div>
-        <button color="primary"
-                class="new-<%= dasherize(name) %>-field" (click)="onHomeBtnClick()" type="submit">
-          Home
-        </button>
-        <button color="primary"
-                class="new-<%= dasherize(name) %>-field" (click)="onNew<%= classify(name) %>BtnClick()" type="submit">
-          New <%= classify(name) %>
-        </button>
+        <ion-button (click)="onHomeBtnClick()">Home</ion-button>
+        <ion-button (click)="onNew<%= classify(name) %>BtnClick()">New <%= classify(name) %></ion-button>
     </div>
 
 </ion-content>
