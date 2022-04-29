@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
+import { PictureService } from '../../../_services/picture/picture.service'
 
 @Component({
     selector: '<%= selector %>-detail',
@@ -16,8 +17,10 @@ export class Detail<%= classify(name) %>Page implements OnInit {
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private _location: Location,
-                private _<%= dasherize(name) %>Service: <%= classify(name) %>Service) {
+                private _<%= dasherize(name) %>Service: <%= classify(name) %>Service,
+                private _pictureService: PictureService) {
 
+        this._pictureService.init()
     }
 
     ngOnInit(): void {
@@ -32,7 +35,7 @@ export class Detail<%= classify(name) %>Page implements OnInit {
     }
 
     onEditBtnClick() {
-        this.navigateTo("/<%= dasherize(name) %>/edit/" + this.model.id)
+        this.navigateTo("/<%= dasherize(name) %>/edit/" + this.model['id'])
     }
 
     navigateTo(url?: string) {
@@ -44,4 +47,12 @@ export class Detail<%= classify(name) %>Page implements OnInit {
         this.navigateTo("/<%= dasherize(name) %>")
     }
 
+    getAssociatedImage() {
+        return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_<%= capitalize(name) %>, this.model['id']);
+    }
+
+    // count = 0;
+    getAssociatedImageCSS() {
+        return " centered ";
+    }
 }
