@@ -1,6 +1,12 @@
-# Getting Started With Schematics
+# Getting Started 
 
-This repository is a basic Schematic implementation that serves as a starting point to create and publish Schematics to NPM.
+This repository is an Ionic Angular implementation that creates Domain Pages, and Profile Pages. All that you need on the front end to have one up and running. Ideally. 
+
+  
+
+$>   schematics ../../savvato-schematics/ionic/savvato-ionic-schematics:page --name=domain-object-name
+
+
 
 ### Testing
 
