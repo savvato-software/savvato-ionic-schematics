@@ -3,6 +3,7 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
+import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service'
 import { AlertService } from '../../../_services/alert/alert.service'
 
 @Component({
@@ -13,17 +14,15 @@ import { AlertService } from '../../../_services/alert/alert.service'
 export class Edit<%= classify(name) %>Page implements OnInit
 {
 
-    model: any = [];
-
     validationsForm: FormGroup;
 
     dirty: boolean = false;
-    initComplete: boolean = false;
 
     constructor(private route: ActivatedRoute,
         private router: Router,
         private formBuilder: FormBuilder,
-        private _<%= camelize(name) %>Service: <%= classify(name) %>Service,
+    private _<%= camelize(name) %>Service: <%= classify(name) %>Service,
+    private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService,
         private _alertService: AlertService) {
 
     }
