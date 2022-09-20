@@ -1,24 +1,18 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>List All <%= classify(name) %>s Page</ion-title>
+        <ion-title>Profile Page</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <!-- This page lists all the <%= dasherize(name) %>s. You will be able to see all the other users <%= dasherize(name) %>s, filter the list, search the list,
-     and select an <%= dasherize(name) %> to view its detail. -->
+    <ion-avatar>
+        <img [src]="getAssociatedImage()"/>
+    </ion-avatar>
 
-    <div *ngFor="let <%= dasherize(name) %> of getListOf<%= classify(name) %>s()" (click)="on<%= classify(name) %>Click(<%= dasherize(name) %>)">
-      User: {{<%= dasherize(name) %>['userName']}}<br/>
-      <%= classify(name) %>: {{<%= dasherize(name) %>['<%= dasherize(name) %>']['name']}}<br/>
-      <br/>
-    </div>
+    {{getUsername()}}<br/>
+    {{getPhoneNumber()}}<br/>
 
-    <hr>
-    <div>
-        <ion-button (click)="onHomeBtnClick()">Home</ion-button>
-        <ion-button (click)="onNew<%= classify(name) %>BtnClick()">New <%= classify(name) %></ion-button>
-    </div>
+    You joined {{getMemberSince()}}.<br/>
 
 </ion-content>

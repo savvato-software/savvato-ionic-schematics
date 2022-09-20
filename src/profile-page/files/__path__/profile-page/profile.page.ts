@@ -1,42 +1,51 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { <%= classify(name) %>Service } from './_services/<%= dasherize(name) %>.service'
+import {ProfileModelService} from "./_services/profile.model.service";
+
+import {AuthService} from "savvato-javascript-services";
+
+import * as moment from 'moment'
 
 @Component({
   selector: '<%= selector %>',
-  templateUrl: './<%= dasherize(name) %>.page.html',
-  styleUrls: ['./<%= dasherize(name) %>.page.<%= styleext %>']
+  templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.<%= styleext %>']
 })
-export class <%= classify(name) %>Page implements OnInit, OnDestroy {
-
-  modelList: any = [];
+export class ProfilePage implements OnInit, OnDestroy {
 
   constructor(private router: Router,
-              private _<%= camelize(name) %>Service: <%= classify(name) %>Service) {
+              private _profileModelService: ProfileModelService,
+              private _authService: AuthService) {
 
   }
 
   public ngOnInit() {
-    this._<%= camelize(name) %>Service.getAll().then((response) => {
-      this.modelList = response;
-    })
+    this._profileModelService.init(this._authService.getUser()['id']);
   }
 
   public ngOnDestroy() {
 
   }
 
-  getListOf<%= classify(name) %>s() {
-    return this.modelList;
+  onEditBtnClick() {
+    this.navigateTo('edit');
   }
 
-  onNew<%= classify(name) %>BtnClick() {
-    this.navigateTo("<%= dasherize(name) %>/create");
+  getAssociatedImage() {
+    return this._profileModelService.get()['image'];
   }
 
-  on<%= classify(name) %>Click(model) {
-   this.navigateTo("<%= dasherize(name) %>/" + model['<%= dasherize(name) %>'].id)
+  getUsername() {
+    return this._profileModelService.get()['name'];
+  }
+
+  getPhoneNumber() {
+    return this._profileModelService.get()['phoneNumber'];
+  }
+
+  getMemberSince() {
+    return moment.unix(this._profileModelService.get()['created'] / 1000).fromNow();
   }
 
   onHomeBtnClick() {

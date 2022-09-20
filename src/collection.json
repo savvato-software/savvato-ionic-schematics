@@ -6,6 +6,12 @@
       "factory": "./page",
       "description": "Create a page.",
       "schema": "./page/schema.json"
+    },
+    "profile-page": {
+      "aliases": [ "pp" ],
+      "factory": "./profile-page",
+      "description": "Create the profile page.",
+      "schema": "./profile-page/schema.json"
     }
   }
 }
