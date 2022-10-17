@@ -7,9 +7,9 @@
       "description": "Create a page.",
       "schema": "./page/schema.json"
     },
-    "profile-page": {
+    "profilePage": {
       "aliases": [ "pp" ],
-      "factory": "./profile-page/index#profile-page",
+      "factory": "./profile-page/index#profilePage",
       "description": "Create the profile page.",
       "schema": "./profile-page/schema.json"
     }

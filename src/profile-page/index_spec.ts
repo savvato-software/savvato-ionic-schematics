@@ -1,7 +1,7 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 
-describe('page', () => {
+describe('profile-page', () => {
   const schematicRunner = new SchematicTestRunner(
     'schematics',
     path.join(__dirname, './../collection.json'),
@@ -14,11 +14,12 @@ describe('page', () => {
   };
 
   const appOptions: any = { 
-    name: 'page'
+    name: 'foo'
   };
 
   const schemaOptions: any = { 
-    name: 'foo'
+    name: '',
+    styleext: 'sass'
   };
 
   let appTree: UnitTestTree;
@@ -29,9 +30,9 @@ describe('page', () => {
   });
 
   it('works', (done) => {
-    schematicRunner.runSchematicAsync('page', schemaOptions, appTree).toPromise().then(tree => {
-      const appComponent = tree.readContent('/projects/page/src/app/app.component.ts'); 
-      expect(appComponent).toContain(`name = '${schemaOptions.name}'`); 
+    schematicRunner.runSchematicAsync('profilePage', schemaOptions, appTree).toPromise().then(tree => {
+      const appComponent = tree.readContent('/src/app/pages/profile-page/profile.page.ts'); 
+      expect(appComponent).toContain(`profile-page-selector`);
       done();
     }, done.fail);
   });

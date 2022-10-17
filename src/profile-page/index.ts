@@ -27,12 +27,12 @@ export async function setupOptions(host: Tree, options: any): Promise<Tree> {
 
     options.path = "src/" + options.path;
 
-    options.selector = "page-" + dasherize(options.name);
+    options.selector = "profile-page-selector";
 
   return host;
 }
 
-export function page(_options: any): Rule {
+export function profilePage(_options: any): Rule {
   return async (tree: Tree, _context: SchematicContext) => {
     await setupOptions(tree, _options);
 

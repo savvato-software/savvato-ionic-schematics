@@ -14,11 +14,12 @@ describe('page', () => {
   };
 
   const appOptions: any = { 
-    name: 'page'
+    name: 'foo'
   };
 
   const schemaOptions: any = { 
-    name: 'foo'
+    name: 'testPage',
+    styleext: 'sass'
   };
 
   let appTree: UnitTestTree;
@@ -30,8 +31,8 @@ describe('page', () => {
 
   it('works', (done) => {
     schematicRunner.runSchematicAsync('page', schemaOptions, appTree).toPromise().then(tree => {
-      const appComponent = tree.readContent('/projects/page/src/app/app.component.ts'); 
-      expect(appComponent).toContain(`name = '${schemaOptions.name}'`); 
+      const appComponent = tree.readContent('/src/app/pages/test-page-page/create/create.html'); 
+      expect(appComponent).toContain(`Create TestPage Page`); 
       done();
     }, done.fail);
   });
