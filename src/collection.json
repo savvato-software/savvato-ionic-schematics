@@ -3,13 +3,13 @@
   "schematics": {
     "page": {
       "aliases": [ "p" ],
-      "factory": "./page",
+      "factory": "./page/index#page",
       "description": "Create a page.",
       "schema": "./page/schema.json"
     },
     "profile-page": {
       "aliases": [ "pp" ],
-      "factory": "./profile-page",
+      "factory": "./profile-page/index#profile-page",
       "description": "Create the profile page.",
       "schema": "./profile-page/schema.json"
     }
