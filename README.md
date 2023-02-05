@@ -4,7 +4,7 @@ This repository is an Ionic Angular implementation that creates Domain Pages, an
 
 Be sure you've run:
 
-$> npm i @angular-devkit/schematics-cli
+$> npm i -g @angular-devkit/schematics-cli
 
 Then..
 
