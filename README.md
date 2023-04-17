@@ -9,7 +9,7 @@ $> npm i -g @angular-devkit/schematics-cli
 Then..
 
 $>   cd your-savvato-ionic-application-directory/
-$>   schematics ../savvato-ionic-schematics/schematics/:page --styleext=scss --name=domainObjectName
+$>   schematics ../savvato-ionic-schematics/:page --styleext=scss --name=domainObjectName
 
 
 NOTE: we should be able to use 'ng generate' to call our schematic, but at present that is not working. We still have the functionality, but somebody may want to figure out why one day.
