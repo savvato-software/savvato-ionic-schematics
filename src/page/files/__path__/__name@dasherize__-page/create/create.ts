@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
+import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service'
 import { AlertService } from '../../../_services/alert/alert.service'
 
 @Component({
@@ -22,7 +22,7 @@ export class Create<%= classify(name) %>Page implements OnInit
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private formBuilder: FormBuilder,
-                private _<%= camelize(name) %>Service: <%= classify(name) %>Service,
+                private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService,
                 private _alertService: AlertService) {
 
     }
@@ -63,17 +63,18 @@ export class Create<%= classify(name) %>Page implements OnInit
         return this.model['description'];
     }
 
-    onSaveBtnClicked() {
+    onSaveBtnClicked()
+    {
         const self = this;
-        this._<%= dasherize(name) %>Service.create(this.model['name'], this.model['description']).then((new<%= classify(name) %>) => {
-            console.log("<%= classify(name) %> created!", new<%= classify(name) %>);
+
+        self._<%= camelize(name) %>ModelService.save(self.model).then((rtnobj) => {
             self._alertService.show({
                 header: 'Alright!',
-                message: "Your <%= classify(name) %> was created!",
+                message: "Your <%= classify(name) %> changes were saved!",
                 buttons: [
                     {
                         text: 'OK', role: 'cancel', handler: () => {
-                            self.router.navigate(['/<%= dasherize(name) %>']);
+                            self.dirty = false;
                         }
                     }]
             })

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {AuthService, JWTApiService} from 'savvato-javascript-services';
+import {AuthService, JWTApiService} from '@savvato-software/savvato-javascript-services';
 
 import { environment } from '../../../_environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
-export class <%= classify(name) %>Service {
+export class <%= classify(name) %>ApiService {
 
     constructor(private _apiService: JWTApiService,
                 private _authService: AuthService) {
@@ -34,7 +34,7 @@ export class <%= classify(name) %>Service {
     }
 
     getById(id) {
-        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/' + id;
+        const url = environment.apiUrl + '/api/<%= dasherize(name) %>?id=' + id;
 
         const rtn = new Promise(
             (resolve, reject) => {
@@ -53,7 +53,7 @@ export class <%= classify(name) %>Service {
     }
 
     getAll() {
-        const url = environment.apiUrl + '/api/<%= dasherize(name) %>';
+        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/all';
 
         const rtn = new Promise(
             (resolve, reject) => {
@@ -72,7 +72,7 @@ export class <%= classify(name) %>Service {
     }
 
     save(model) {
-        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/' + model['id'];
+        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/save';
         let data = {'id': model['id'], 'name': model['name'], 'description': model['description']};
 
         const rtn = new Promise(
@@ -91,14 +91,14 @@ export class <%= classify(name) %>Service {
         return rtn;
     }
 
-    delete(id) {
-        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/' + id;
+    delete(model) {
+        const url = environment.apiUrl + '/api/<%= dasherize(name) %>?id=' + model['id'];
 
         const rtn = new Promise(
             (resolve, reject) => {
                 this._apiService.delete(url, { }).subscribe(
                     (_data) => {
-                        console.log('Deleted <%= classify(name) %> ' + id + '!');
+                        console.log('Deleted <%= classify(name) %> ' + model['id'] + '!');
                         console.log(_data);
 
                         resolve(_data);

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
-import { PictureService } from '../../../_services/picture/picture.service'
+import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service'
 
 @Component({
     selector: '<%= selector %>-detail',
@@ -12,27 +11,27 @@ import { PictureService } from '../../../_services/picture/picture.service'
 })
 export class Detail<%= classify(name) %>Page implements OnInit {
 
+    id: number;
     model:any = undefined;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private _location: Location,
-                private _<%= dasherize(name) %>Service: <%= classify(name) %>Service,
-                private _pictureService: PictureService) {
+                private _<%= dasherize(name) %>ModelService: <%= classify(name) %>ModelService) {
 
-        this._pictureService.init()
     }
 
     ngOnInit(): void {
         let self = this;
 
-        const id = this.route.snapshot.params.id;
+        self.route.params.subscribe((params: any) => {
+            self.id = Number(params['eventsId']);
 
-        this._<%= dasherize(name) %>Service.getById(id).
-        then((response) => {
-            self.model = response;
-        })
+            self.model = self._<%= dasherize(name) %>ModelService.getById(self.id);
+        });
+
     }
+
 
     onEditBtnClick() {
         this.navigateTo("/<%= dasherize(name) %>/edit/" + this.model['id'])
@@ -45,14 +44,5 @@ export class Detail<%= classify(name) %>Page implements OnInit {
 
     on<%= classify(name) %>sPageBtnClick() {
         this.navigateTo("/<%= dasherize(name) %>")
-    }
-
-    getAssociatedImage() {
-        return this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_<%= capitalize(name) %>, this.model['id']);
-    }
-
-    // count = 0;
-    getAssociatedImageCSS() {
-        return " centered ";
     }
 }

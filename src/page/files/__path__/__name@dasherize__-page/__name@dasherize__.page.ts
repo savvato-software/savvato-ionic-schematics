@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { <%= classify(name) %>Service } from './_services/<%= dasherize(name) %>.service'
+import { <%= classify(name) %>ModelService } from './_services/<%= dasherize(name) %>.model.service'
 
 @Component({
   selector: '<%= selector %>',
@@ -13,12 +13,12 @@ export class <%= classify(name) %>Page implements OnInit, OnDestroy {
   modelList: any = [];
 
   constructor(private router: Router,
-              private _<%= camelize(name) %>Service: <%= classify(name) %>Service) {
+              private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService) {
 
   }
 
   public ngOnInit() {
-    this._<%= camelize(name) %>Service.getAll().then((response) => {
+    this._<%= camelize(name) %>ModelService.init().then((response) => {
       this.modelList = response;
     })
   }
@@ -31,7 +31,7 @@ export class <%= classify(name) %>Page implements OnInit, OnDestroy {
     return this.modelList;
   }
 
-  onNew<%= classify(name) %>BtnClick() {
+  onCreateBtnClicked() {
     this.navigateTo("<%= dasherize(name) %>/create");
   }
 
@@ -39,7 +39,7 @@ export class <%= classify(name) %>Page implements OnInit, OnDestroy {
    this.navigateTo("<%= dasherize(name) %>/" + model['<%= dasherize(name) %>'].id)
   }
 
-  onHomeBtnClick() {
+  onHomeBtnClicked() {
     this.navigateTo("home");
   }
 

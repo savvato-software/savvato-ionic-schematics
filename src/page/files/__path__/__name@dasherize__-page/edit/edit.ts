@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { <%= classify(name) %>Service } from '../_services/<%= dasherize(name) %>.service'
 import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service'
 import { AlertService } from '../../../_services/alert/alert.service'
 
@@ -13,17 +12,18 @@ import { AlertService } from '../../../_services/alert/alert.service'
 })
 export class Edit<%= classify(name) %>Page implements OnInit
 {
+    id: number
+    model:any = undefined;
 
     validationsForm: FormGroup;
 
     dirty: boolean = false;
 
     constructor(private route: ActivatedRoute,
-        private router: Router,
-        private formBuilder: FormBuilder,
-    private _<%= camelize(name) %>Service: <%= classify(name) %>Service,
-    private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService,
-        private _alertService: AlertService) {
+                private router: Router,
+                private formBuilder: FormBuilder,
+                private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService,
+                private _alertService: AlertService) {
 
     }
 
@@ -37,10 +37,15 @@ export class Edit<%= classify(name) %>Page implements OnInit
     };
 
     ngOnInit() {
-       const id = this.route.snapshot.params.id;
-       this._<%= camelize(name) %>ModelService.init(id);
+        const self = this;
 
-       this.validationsForm = this.formBuilder.group({
+        self.route.params.subscribe((params: any) => {
+            self.id = Number(params['eventsId']);
+
+            self.model = self._<%= dasherize(name) %>ModelService.getById(self.id);
+        });
+
+       self.validationsForm = this.formBuilder.group({
             name: new FormControl('', Validators.required),
             description: new FormControl('', Validators.required)
        });
@@ -70,10 +75,10 @@ export class Edit<%= classify(name) %>Page implements OnInit
     {
         const self = this;
 
-        this._<%= camelize(name) %>ModelService.save().then((rtnobj) => {
+        self._<%= camelize(name) %>ModelService.save(self.model).then((rtnobj) => {
             self._alertService.show({
                 header: 'Alright!',
-                message: "Your Topic changes were saved!",
+                message: "Your <%= classify(name) %> changes were saved!",
                 buttons: [
                     {
                         text: 'OK', role: 'cancel', handler: () => {
