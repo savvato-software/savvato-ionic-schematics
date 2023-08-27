@@ -28,15 +28,15 @@ export class <%= classify(name) %>Page implements OnInit, OnDestroy {
   }
 
   getListOf<%= classify(name) %>s() {
-    return this.modelList;
+    return this._<%= camelize(name) %>ModelService.get();
   }
 
   onCreateBtnClicked() {
-    this.navigateTo("<%= dasherize(name) %>/create");
+    this.navigateTo("<%= dasherize(name) %>s/create");
   }
 
   on<%= classify(name) %>Click(model) {
-   this.navigateTo("<%= dasherize(name) %>/" + model['<%= dasherize(name) %>'].id)
+   this.navigateTo("<%= dasherize(name) %>s/" + model['<%= dasherize(name) %>'].id)
   }
 
   onHomeBtnClicked() {
