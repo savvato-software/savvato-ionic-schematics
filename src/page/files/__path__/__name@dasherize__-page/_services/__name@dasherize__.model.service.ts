@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AuthService, ModelTransformingService } from '@savvato-software/savvato-javascript-services';
+import {AuthService, FunctionPromiseService, ModelTransformingService } from '@savvato-software/savvato-javascript-services';
 
 import { <%= classify(name) %> } from "../_types/<%= dasherize(name) %>.type";
 import { <%= classify(name) %>ApiService } from "./<%= dasherize(name) %>.api.service";
@@ -15,6 +15,7 @@ export class <%= classify(name) %>ModelService {
 
     constructor(private _authService: AuthService,
                 private _<%= dasherize(name) %>ApiService: <%= classify(name) %>ApiService,
+                private _functionPromiseService: FunctionPromiseService,
                 private _constants: Constants,
                 private _modelTransformingService: ModelTransformingService) {
 
