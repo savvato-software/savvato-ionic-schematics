@@ -12,7 +12,6 @@ import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(na
 export class Detail<%= classify(name) %>Page implements OnInit {
 
     id: number;
-    model:any = undefined;
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -22,19 +21,20 @@ export class Detail<%= classify(name) %>Page implements OnInit {
     }
 
     ngOnInit(): void {
-        let self = this;
+        const self = this;
 
         self.route.params.subscribe((params: any) => {
-            self.id = Number(params['eventsId']);
-
-            self.model = self._<%= dasherize(name) %>ModelService.getById(self.id);
+            self.id = Number(params['id']);
         });
 
     }
 
+    get model() {
+        return this._<%= dasherize(name) %>ModelService.getById(this.id);
+    }
 
     onEditBtnClick() {
-        this.navigateTo("/<%= dasherize(name) %>/edit/" + this.model['id'])
+        this.navigateTo("/<%= dasherize(name) %>/edit/" + this.id)
     }
 
     navigateTo(url?: string) {

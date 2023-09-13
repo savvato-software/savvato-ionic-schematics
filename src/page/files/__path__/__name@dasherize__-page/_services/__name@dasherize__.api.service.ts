@@ -13,13 +13,12 @@ export class <%= classify(name) %>ApiService {
 
     }
 
-    create(name, description) {
+    create(model) {
         const url = environment.apiUrl + '/api/<%= dasherize(name) %>/create';
-        let data = {'name': name, 'description': description};
 
         const rtn = new Promise(
             (resolve, reject) => {
-                this._apiService.post(url, data).subscribe(
+                this._apiService.post(url, model).subscribe(
                     (_data) => {
                         console.log('New <%= classify(name) %> Created!');
                         console.log(_data);
