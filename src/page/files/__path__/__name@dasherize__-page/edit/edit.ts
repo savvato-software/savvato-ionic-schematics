@@ -43,7 +43,7 @@ export class Edit<%= classify(name) %>Page implements OnInit
         const self = this;
 
         self.route.params.subscribe((params: any) => {
-            self.id = Number(params['eventsId']);
+            self.id = Number(params['id']);
 
             self.model = self._<%= dasherize(name) %>ModelService.getById(self.id);
 
