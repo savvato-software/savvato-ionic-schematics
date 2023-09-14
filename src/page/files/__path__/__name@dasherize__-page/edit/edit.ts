@@ -17,6 +17,9 @@ export class Edit<%= classify(name) %>Page implements OnInit
 
     validationsForm: FormGroup;
 
+    nameControl: FormControl;
+    descriptionControl: FormControl;
+
     dirty: boolean = false;
 
     constructor(private route: ActivatedRoute,
@@ -43,32 +46,35 @@ export class Edit<%= classify(name) %>Page implements OnInit
             self.id = Number(params['eventsId']);
 
             self.model = self._<%= dasherize(name) %>ModelService.getById(self.id);
-        });
 
-       self.validationsForm = this.formBuilder.group({
-            name: new FormControl('', Validators.required),
-            description: new FormControl('', Validators.required)
-       });
+            self.nameControl = new FormControl(self.model.name, Validators.required);
+            self.descriptionControl = new FormControl(self.model.description, Validators.required);
+
+            self.validationsForm = this.formBuilder.group({
+                name: self.nameControl,
+                description: self.descriptionControl
+            });
+        });
     }
 
     onNameChange($event) {
-        this._<%= camelize(name) %>ModelService.get()['name'] = $event.currentTarget.value;
+        this._<%= camelize(name) %>ModelService.getById(this.id)['name'] = $event.currentTarget.value;
 
         this.dirty = true;
     }
 
     getName() {
-        return this._<%= camelize(name) %>ModelService.get()['name'];
+        return this._<%= camelize(name) %>ModelService.getById(this.id)['name'];
     }
 
     onDescriptionChange($event) {
-        this._<%= camelize(name) %>ModelService.get()['description'] = $event.currentTarget.value;
+        this._<%= camelize(name) %>ModelService.getById(this.id)['description'] = $event.currentTarget.value;
 
         this.dirty = true;
     }
 
     getDescription() {
-        return this._<%= camelize(name) %>ModelService.get()['description'];
+        return this._<%= camelize(name) %>ModelService.getById(this.id)['description'];
     }
 
     onSaveBtnClicked()
@@ -90,6 +96,6 @@ export class Edit<%= classify(name) %>Page implements OnInit
     }
 
     on<%= classify(name) %>sPageBtnClick() {
-        this.router.navigate(['/<%= dasherize(name) %>']);
+        this.router.navigate(['/<%= dasherize(name) %>s']);
     }
 }

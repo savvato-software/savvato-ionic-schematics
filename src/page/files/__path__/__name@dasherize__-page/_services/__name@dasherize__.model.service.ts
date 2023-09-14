@@ -27,8 +27,12 @@ export class <%= classify(name) %>ModelService {
         const self = this;
 
         self._functionPromiseService.initFunc(self.funcKey, (data) => {
-            self._<%= dasherize(name) %>ApiService.getById(data['id']).then((response: <%= classify(name) %>) => {
-                self.model['id'] = response;
+            return new Promise((resolve, reject) => {
+                self._<%= dasherize(name) %>ApiService.getById(data['id']).then((response: <%= classify(name) %>) => {
+                    self.model['id'] = response;
+
+                    resolve(response);
+                });
             });
         });
 

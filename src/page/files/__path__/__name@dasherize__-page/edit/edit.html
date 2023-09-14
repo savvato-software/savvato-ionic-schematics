@@ -8,7 +8,7 @@
     <form [formGroup]="validationsForm" (ngSubmit)="onSaveBtnClicked()">
         <ion-item>
             <ion-label position="floating" color="primary">Name</ion-label>
-            <ion-input data-test="name-input" type="text" formControlName="name" (ionInput)="onNameChange($event)" [value]="getName()" required></ion-input>
+            <ion-input data-test="name-input" aria-label="name" type="text" formControlName="name" (ionInput)="onNameChange($event)" [value]="getName()" required></ion-input>
         </ion-item>
         <div class="validation-errors">
             <ng-container *ngFor="let validation of validationMessages.name">
@@ -19,7 +19,7 @@
         </div>
         <ion-item>
             <ion-label position="floating" color="primary">Description</ion-label>
-            <ion-input data-test="name-input" type="text" formControlName="description" (ionInput)="onDescriptionChange($event)" [value]="getDescription()" required></ion-input>
+            <ion-input data-test="desc-input" type="text" aria-label="description" formControlName="description" (ionInput)="onDescriptionChange($event)" [value]="getDescription()" required></ion-input>
         </ion-item>
         <div class="validation-errors">
             <ng-container *ngFor="let validation of validationMessages.description">
