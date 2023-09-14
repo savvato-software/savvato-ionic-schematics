@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { AuthService } from "@savvato-software/savvato-javascript-services";
 
 import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service'
 
@@ -16,7 +17,8 @@ export class Detail<%= classify(name) %>Page implements OnInit {
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private _location: Location,
-                private _<%= dasherize(name) %>ModelService: <%= classify(name) %>ModelService) {
+                private _<%= dasherize(name) %>ModelService: <%= classify(name) %>ModelService,
+                private _authService: AuthService) {
 
     }
 
@@ -31,6 +33,10 @@ export class Detail<%= classify(name) %>Page implements OnInit {
 
     get model() {
         return this._<%= dasherize(name) %>ModelService.getById(this.id);
+    }
+
+    isEditBtnEnabled() {
+        return this._<%= dasherize(name) %>ModelService.getById(this.id)['userId'] === this._authService.getUser()['id'];
     }
 
     onEditBtnClick() {
