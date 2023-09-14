@@ -12,11 +12,11 @@
     <!-- This page lists all the <%= dasherize(name) %>s. You will be able to see all the other users <%= dasherize(name) %>s, filter the list, search the list,
      and select an <%= dasherize(name) %> to view its detail. -->
 
-    <div *ngFor="let <%= dasherize(name) %> of getListOf<%= classify(name) %>s()" (click)="on<%= classify(name) %>Click(<%= dasherize(name) %>)">
+    <ion-card *ngFor="let <%= dasherize(name) %> of getListOf<%= classify(name) %>s()" (click)="on<%= classify(name) %>Click(<%= dasherize(name) %>)">
       User: {{<%= dasherize(name) %>['userName']}}<br/>
       <%= classify(name) %>: {{<%= dasherize(name) %>['name']}}<br/>
       <br/>
-    </div>
+    </ion-card>
 
     <hr>
 
