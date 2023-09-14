@@ -34,7 +34,7 @@ export class Detail<%= classify(name) %>Page implements OnInit {
     }
 
     onEditBtnClick() {
-        this.navigateTo("/<%= dasherize(name) %>/edit/" + this.id)
+        this.navigateTo("/<%= dasherize(name) %>s/edit/" + this.id)
     }
 
     navigateTo(url?: string) {
