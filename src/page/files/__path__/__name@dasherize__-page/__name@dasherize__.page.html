@@ -14,7 +14,7 @@
 
     <div *ngFor="let <%= dasherize(name) %> of getListOf<%= classify(name) %>s()" (click)="on<%= classify(name) %>Click(<%= dasherize(name) %>)">
       User: {{<%= dasherize(name) %>['userName']}}<br/>
-      <%= classify(name) %>: {{<%= dasherize(name) %>['<%= dasherize(name) %>']['name']}}<br/>
+      <%= classify(name) %>: {{<%= dasherize(name) %>['name']}}<br/>
       <br/>
     </div>
 
