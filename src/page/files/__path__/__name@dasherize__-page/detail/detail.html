@@ -1,6 +1,10 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>Detail <%= classify(name) %> Page</ion-title>
+        <ion-buttons slot="end">
+            <ion-button color="tertiary" (click)="on<%= classify(name) %>sPageBtnClick()">To List Page</ion-button>
+            <ion-button color="tertiary" (click)="onEditBtnClick()">Edit</ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 

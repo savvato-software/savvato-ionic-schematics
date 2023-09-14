@@ -77,6 +77,7 @@ export class Create<%= classify(name) %>Page implements OnInit
                     {
                         text: 'OK', role: 'cancel', handler: () => {
                             self.dirty = false;
+                            self.on<%= classify(name) %>sPageBtnClick();
                         }
                     }]
             })
