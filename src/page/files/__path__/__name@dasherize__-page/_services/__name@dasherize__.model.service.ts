@@ -29,7 +29,7 @@ export class <%= classify(name) %>ModelService {
         self._functionPromiseService.initFunc(self.funcKey, (data) => {
             return new Promise((resolve, reject) => {
                 self._<%= dasherize(name) %>ApiService.getById(data['id']).then((response: <%= classify(name) %>) => {
-                    self.model['id'] = response;
+                    self.model[data['id']] = response;
 
                     resolve(response);
                 });
@@ -54,10 +54,10 @@ export class <%= classify(name) %>ModelService {
     }
 
     getById(id) {
-        if (this.model['id'])
-            return this.model['id'];
+        if (this.model[id])
+            return this.model[id];
         else
-            return this._functionPromiseService.waitAndGet(this.funcKey, this.funcKey, {id: id});
+            return this._functionPromiseService.waitAndGet(this.funcKey+id, this.funcKey, {id: id});
     }
 
     save(model) {
