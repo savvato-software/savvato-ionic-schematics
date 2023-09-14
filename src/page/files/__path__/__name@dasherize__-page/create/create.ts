@@ -13,7 +13,7 @@ import { AlertService } from '../../../_services/alert/alert.service'
 export class Create<%= classify(name) %>Page implements OnInit
 {
 
-    model: any = [];
+    model: any = {};
 
     validationsForm: FormGroup;
 
@@ -41,6 +41,8 @@ export class Create<%= classify(name) %>Page implements OnInit
             name: new FormControl('', Validators.required),
             description: new FormControl('', Validators.required)
         });
+
+        this.model['id'] = -1;
     }
 
     onNameChange($event) {

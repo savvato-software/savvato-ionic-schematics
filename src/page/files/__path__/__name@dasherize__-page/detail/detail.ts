@@ -43,6 +43,6 @@ export class Detail<%= classify(name) %>Page implements OnInit {
     }
 
     on<%= classify(name) %>sPageBtnClick() {
-        this.navigateTo("/<%= dasherize(name) %>")
+        this.navigateTo("/<%= dasherize(name) %>s")
     }
 }
