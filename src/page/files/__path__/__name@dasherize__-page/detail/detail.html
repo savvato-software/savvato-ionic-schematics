@@ -8,6 +8,7 @@
     </ion-toolbar>
 </ion-header>
 
+<div *ngIf="!!model">Created By: {{model.userName}}<br/></div>
 <div *ngIf="!!model">{{model.name}}<br/></div>
 <div *ngIf="!!model">{{model.description}}<br/></div>
 
