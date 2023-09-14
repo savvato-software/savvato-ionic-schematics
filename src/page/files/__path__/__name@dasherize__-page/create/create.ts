@@ -82,6 +82,6 @@ export class Create<%= classify(name) %>Page implements OnInit
     }
 
     on<%= classify(name) %>sPageBtnClick() {
-        this.router.navigate(['/<%= dasherize(name) %>']);
+        this.router.navigate(['/<%= dasherize(name) %>s']);
     }
 }
