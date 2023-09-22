@@ -16,5 +16,5 @@
 
 <div>
     <ion-button (click)="on<%= classify(name) %>sPageBtnClick()"><%= classify(name) %> Page</ion-button>
-    <ion-button (click)="onEditBtnClick()">Edit</ion-button>
+    <ion-button (click)="onEditBtnClick()" [disabled]="!isEditBtnEnabled()">Edit</ion-button>
 </div>
