@@ -36,7 +36,7 @@ export class <%= classify(name) %>Page implements OnInit, OnDestroy {
   }
 
   on<%= classify(name) %>Click(model) {
-   this.navigateTo("<%= dasherize(name) %>s/" + model['<%= dasherize(name) %>'].id)
+   this.navigateTo("<%= dasherize(name) %>s/" + model['id'])
   }
 
   onHomeBtnClicked() {

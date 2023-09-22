@@ -41,7 +41,9 @@ export class <%= classify(name) %>ModelService {
 
         self._modelTransformingService.addTransformer((model, fin) => {
             self._<%= dasherize(name) %>ApiService.getAll().then((response: <%= classify(name) %>[]) => {
-                model['all'] = response;
+                model['all'] = response.sort((a, b) => {
+                    return a['lastUpdated'] < b['lastUpdated'] ? 1 : -1;
+                });
                 fin();
             })
         });
