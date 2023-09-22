@@ -7,14 +7,39 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{model.name}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-textarea aria-label="Details & Description" [(ngModel)]="model.description" [disabled]="!isEditBtnEnabled()"></ion-textarea>
+            </ion-item>
+            <ion-item>
+                <ul class="single-row-list">
+                    <li><div class="single-row-list">
+                        <span class="createdBySpan">Created By:</span>
+                        <div class="createdByAvatar">
+                            <img [src]="getAssociatedImage(model)"/>
+                        </div>
+                        <div class="usernameInAList">
+                            {{model.userName}}
+                        </div>
+                    </div>
+                    </li>
+                    <li>Created {{getCreatedTime()}}</li>
+                    <li>Updated {{getLastUpdatedTime()}}</li>
+                </ul>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+</ion-content>
 
-<div *ngIf="!!model">Created By: {{model.userName}}<br/></div>
-<div *ngIf="!!model">{{model.name}}<br/></div>
-<div *ngIf="!!model">{{model.description}}<br/></div>
-
-<br/>
-
-<div>
-    <ion-button (click)="on<%= classify(name) %>sPageBtnClick()"><%= classify(name) %> Page</ion-button>
-    <ion-button (click)="onEditBtnClick()" [disabled]="!isEditBtnEnabled()">Edit</ion-button>
-</div>
+<ion-footer>
+    <ion-toolbar id="bottom-toolbar" color="light">
+        <ion-button (click)="onHomeBtnClick()" fill="clear"><ion-icon name="home-outline"></ion-icon></ion-button>
+        <ion-button (click)="on<%= classify(name) %>sPageBtnClick()" fill="clear"><ion-icon name="question-mark"></ion-icon></ion-button>
+        <ion-button (click)="onEditBtnClick()" [disabled]="!isEditBtnEnabled()" fill="clear"><ion-icon name="pencil"></ion-icon></ion-button>
+    </ion-toolbar>
+</ion-footer>

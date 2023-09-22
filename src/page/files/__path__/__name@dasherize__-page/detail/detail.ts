@@ -3,7 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { AuthService } from "@savvato-software/savvato-javascript-services";
 
+import * as moment from 'moment';
 import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service'
+import {PictureService} from "../../../_services/picture/picture.service";
+import {Constants} from "../../../_constants/constants";
 
 @Component({
     selector: '<%= selector %>-detail',
@@ -17,6 +20,8 @@ export class Detail<%= classify(name) %>Page implements OnInit {
     constructor(private route: ActivatedRoute,
                 private router: Router,
                 private _location: Location,
+                private _constants: Constants,
+                private _pictureService: PictureService,
                 private _<%= dasherize(name) %>ModelService: <%= classify(name) %>ModelService,
                 private _authService: AuthService) {
 
@@ -50,5 +55,23 @@ export class Detail<%= classify(name) %>Page implements OnInit {
 
     on<%= classify(name) %>sPageBtnClick() {
         this.navigateTo("/<%= dasherize(name) %>s")
+    }
+
+    onHomeBtnClick() {
+        this.navigateTo("/home")
+    }
+
+    getAssociatedImage(model) {
+        const PHOTO_SIZE = 50; // does this even mean anything?
+        let rtn = this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, model, PHOTO_SIZE);
+        return rtn && rtn['url'];
+    }
+
+    getCreatedTime() {
+        return moment.unix(this.model['created'] / 1000).fromNow();
+    }
+
+    getLastUpdatedTime() {
+        return moment.unix(this.model['lastUpdated'] / 1000).fromNow();
     }
 }

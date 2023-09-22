@@ -1,0 +1,42 @@
+.single-row-list {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  display: flex; /* Use flexbox to display items in a row */
+  color: grey;
+  align-items: center;
+}
+
+.single-row-list li {
+  margin-right: 30px; /* Add some spacing between items if needed */
+}
+
+.usernameIonItem {
+  padding-bottom: 1em;
+}
+
+.avatarInAList {
+  height: 3em;
+  width: 3.25em;
+  background-size: cover;
+  background-position: center;
+}
+
+.avatarInAList img {
+  height: 3em;
+  width: 3.25em;
+  border-radius: 50%;
+}
+
+.createdByAvatar img {
+  height: 2em;
+  width: 2.25em;
+  border-radius: 65%;
+}
+
+.usernameInAList {
+  padding-left: 1em;
+}
+
+.createdBySpan {
+  padding-right: 1em;
+}
