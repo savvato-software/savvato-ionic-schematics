@@ -13,8 +13,21 @@
      and select an <%= dasherize(name) %> to view its detail. -->
 
     <ion-card *ngFor="let <%= dasherize(name) %> of getListOf<%= classify(name) %>s()" (click)="on<%= classify(name) %>Click(<%= dasherize(name) %>)">
-      User: {{<%= dasherize(name) %>['userName']}}<br/>
-      <%= classify(name) %>: {{<%= dasherize(name) %>['name']}}<br/>
+        <ion-card-header>
+            {{<%= dasherize(name) %>['name']}}
+        </ion-card-header>
+        <ion-card-content>
+            <div class="single-row-list">
+                <div class="createdByAvatar">
+                    <img [src]="getAssociatedImage(<%= dasherize(name) %>)"/>
+                </div>
+                <div class="usernameInAList">
+                   {{<%= dasherize(name) %>['userName']}}
+                </div>
+            </div>
+        </ion-card-content>
+
+
       <br/>
     </ion-card>
 

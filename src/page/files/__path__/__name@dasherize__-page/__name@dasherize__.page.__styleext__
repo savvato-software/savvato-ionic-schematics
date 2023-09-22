@@ -1,3 +1,21 @@
 <%= selector %> {
 
 }
+
+.single-row-list {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  display: flex; /* Use flexbox to display items in a row */
+  color: grey;
+  align-items: center;
+}
+
+.usernameInAList {
+  padding-left: 1em;
+}
+
+.createdByAvatar img {
+  height: 2em;
+  width: 2.25em;
+  border-radius: 65%;
+}
