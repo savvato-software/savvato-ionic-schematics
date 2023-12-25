@@ -52,7 +52,7 @@ export class <%= classify(name) %>ApiService {
     }
 
     getAll() {
-        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/all';
+        const url = environment.apiUrl + '/api/<%= dasherize(name) %>/all?userId=' + this._authService.getUser()['id'];
 
         const rtn = new Promise(
             (resolve, reject) => {
