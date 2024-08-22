@@ -2,7 +2,16 @@
 
 This repository is an Ionic Angular implementation that creates Domain Pages, and Profile Pages. All that you need on the front end to have one up and running. Ideally. 
 
-Be sure you've run:
+You need to build this project before you can use it to modify another project.
+
+
+```
+npm install
+npm run build
+```
+
+
+In the other project, be sure you've run:
 
 ```
 npm i -g @angular-devkit/schematics-cli
