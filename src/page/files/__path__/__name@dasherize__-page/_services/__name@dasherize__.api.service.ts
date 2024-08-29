@@ -18,15 +18,17 @@ export class <%= classify(name) %>ApiService {
 
         const rtn = new Promise(
             (resolve, reject) => {
-                this._apiService.post(url, model).subscribe(
-                    (_data) => {
+                this._apiService.post(url, model).subscribe({
+                    next: (_data) => {
                         console.log('New <%= classify(name) %> Created!');
                         console.log(_data);
 
                         resolve(_data);
-                    }, (err) => {
+                    },
+                    error: (err) => {
                         reject(err);
-                    });
+                    }
+                });
             });
 
         return rtn;
@@ -37,15 +39,17 @@ export class <%= classify(name) %>ApiService {
 
         const rtn = new Promise(
             (resolve, reject) => {
-                this._apiService.get(url).subscribe(
-                    (_data) => {
+                this._apiService.get(url).subscribe({
+                    next: (_data) => {
                         console.log('Read ' + id + ' <%= classify(name) %> operation completed!');
                         console.log(_data);
 
                         resolve(_data);
-                    }, (err) => {
+                    },
+                    error: (err) => {
                         reject(err);
-                    });
+                    }
+                });
             });
 
         return rtn;
@@ -56,15 +60,17 @@ export class <%= classify(name) %>ApiService {
 
         const rtn = new Promise(
             (resolve, reject) => {
-                this._apiService.get(url).subscribe(
-                    (_data) => {
+                this._apiService.get(url).subscribe({
+                    next: (_data) => {
                         console.log('Read All <%= classify(name) %> operation completed!');
                         console.log(_data);
 
                         resolve(_data);
-                    }, (err) => {
+                    },
+                    error: (err) => {
                         reject(err);
-                    });
+                    }
+                });
             });
 
         return rtn;
@@ -76,15 +82,17 @@ export class <%= classify(name) %>ApiService {
 
         const rtn = new Promise(
             (resolve, reject) => {
-                this._apiService.put(url, data).subscribe(
-                    (_data) => {
+                this._apiService.put(url, data).subscribe({
+                    next: (_data) => {
                         console.log('Saved <%= classify(name) %> ' + model['id']);
                         console.log(_data);
 
                         resolve(_data);
-                    }, (err) => {
+                    },
+                    error: (err) => {
                         reject(err);
-                    });
+                    }
+                });
             });
 
         return rtn;
@@ -95,13 +103,14 @@ export class <%= classify(name) %>ApiService {
 
         const rtn = new Promise(
             (resolve, reject) => {
-                this._apiService.delete(url, { }).subscribe(
-                    (_data) => {
+                this._apiService.delete(url, { }).subscribe({
+                    next: (_data) => {
                         console.log('Deleted <%= classify(name) %> ' + model['id'] + '!');
                         console.log(_data);
 
                         resolve(_data);
-                    }, (err) => {
+                    },
+                    error: (err) => {
                         reject(err);
                     });
             });
