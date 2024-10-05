@@ -112,7 +112,7 @@ export class <%= classify(name) %>ApiService {
                     },
                     error: (err) => {
                         reject(err);
-                    });
+                    }});
             });
 
         return rtn;
