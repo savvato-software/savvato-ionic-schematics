@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AuthService, FunctionPromiseService, ModelTransformingService } from '@savvato-software/savvato-javascript-services';
+import {AuthService, FunctionService, ModelTransformingService } from '@savvato-software/savvato-javascript-services';
 
 import { <%= classify(name) %> } from "../_types/<%= dasherize(name) %>.type";
 import { <%= classify(name) %>ApiService } from "./<%= dasherize(name) %>.api.service";
@@ -15,7 +15,7 @@ export class <%= classify(name) %>ModelService {
 
     constructor(private _authService: AuthService,
                 private _<%= dasherize(name) %>ApiService: <%= classify(name) %>ApiService,
-                private _functionPromiseService: FunctionPromiseService,
+                private _functionService: FunctionService,
                 private _constants: Constants,
                 private _modelTransformingService: ModelTransformingService) {
 
@@ -26,12 +26,12 @@ export class <%= classify(name) %>ModelService {
     init() {
         const self = this;
 
-        self._functionPromiseService.initFunc(self.funcKey, (data) => {
+        self._functionService.saveFunction(self.funcKey, (data) => {
             return new Promise((resolve, reject) => {
                 self._<%= dasherize(name) %>ApiService.getById(data['id']).then((response: <%= classify(name) %>) => {
                     self.model[data['id']] = response;
 
-                    resolve(response);
+                    resolve({response: response});
                 });
             });
         });
@@ -59,7 +59,7 @@ export class <%= classify(name) %>ModelService {
         if (this.model[id])
             return this.model[id];
         else
-            return this._functionPromiseService.waitAndGet(this.funcKey+id, this.funcKey, {id: id});
+            return this._functionService.getLastResult(this.funcKey, {id: id});
     }
 
     save(model) {
