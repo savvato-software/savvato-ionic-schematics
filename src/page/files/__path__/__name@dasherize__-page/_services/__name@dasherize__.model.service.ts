@@ -1,24 +1,25 @@
-import { Injectable } from '@angular/core';
-import {AuthService, FunctionService, ModelTransformingService } from '@savvato-software/savvato-javascript-services';
+import { Injectable, Injector } from '@angular/core';
+import {AuthService, FunctionService } from '@savvato-software/savvato-javascript-services';
 
 import { <%= classify(name) %> } from "../_types/<%= dasherize(name) %>.type";
 import { <%= classify(name) %>ApiService } from "./<%= dasherize(name) %>.api.service";
 
 import { Constants } from "../../../_constants/constants";
+import { ModelTransformingServiceProviderService } from "../../_services/model-transforming-service-provider.service";
 
 @Injectable({
     providedIn: 'root'
 })
-export class <%= classify(name) %>ModelService {
+export class <%= classify(name) %>ModelService extends ModelTransformingServiceProviderService {
 
     model: <%= classify(name) %>[] = [];
 
-    constructor(private _authService: AuthService,
+    constructor(protected override injector: Injector,
+                private _authService: AuthService,
                 private _<%= dasherize(name) %>ApiService: <%= classify(name) %>ApiService,
                 private _functionService: FunctionService,
-                private _constants: Constants,
-                private _modelTransformingService: ModelTransformingService) {
-
+                private _constants: Constants) {
+        super(injector);
     }
 
     funcKey = '<%= dasherize(name) %>-get-by-id';
@@ -36,10 +37,12 @@ export class <%= classify(name) %>ModelService {
             });
         });
 
-        self._modelTransformingService.reset();
-        self._modelTransformingService.clearAllTransformers();
+        const modelTransformationService = this.createModelTransformingService();
 
-        self._modelTransformingService.addTransformer((model, fin) => {
+        modelTransformationService.reset();
+        modelTransformationService.clearAllTransformers();
+
+        modelTransformationService.addTransformer((model, fin) => {
             self._<%= dasherize(name) %>ApiService.getAll().then((response: <%= classify(name) %>[]) => {
                 model['all'] = response.sort((a, b) => {
                     return a['lastUpdated'] < b['lastUpdated'] ? 1 : -1;
@@ -48,7 +51,7 @@ export class <%= classify(name) %>ModelService {
             })
         });
 
-        return self._modelTransformingService.transform(self.model);
+        return modelTransformationService.transform(self.model);
     }
 
     get() {

@@ -1,21 +1,27 @@
 {
   "$schema": "http://json-schema.org/schema",
   "$id": "page",
-  "title": "page schema",
+  "title": "Page Options Schema",
   "type": "object",
   "properties": {
     "name": {
       "type": "string",
-      "description": "Domain Object Name",
-      "x-prompt": "What is the domain object name?"
+      "description": "The name of the page."
     },
     "path": {
       "type": "string",
       "description": "The path to create the page.",
-      "default": "app/pages",
-      "visible": false
-  }},
-  "required": ["name"]
+      "default": "src/app/pages"
+    },
+    "styleext": {
+      "type": "string",
+      "description": "The style extension to use.",
+      "default": "scss"
+    },
+    "entitymetadata": {
+      "type": "string",
+      "description": "JSON string (or path to JSON) describing entity fields."
+    }
+  },
+  "required": ["name", "entitymetadata", "styleext"]
 }
-
-

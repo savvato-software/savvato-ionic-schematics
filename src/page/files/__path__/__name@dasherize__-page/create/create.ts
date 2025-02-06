@@ -2,86 +2,85 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service'
-import { AlertService } from '../../../_services/alert/alert.service'
+import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service';
+import { AlertService } from '../../../_services/alert/alert.service';
 
 @Component({
     selector: '<%= dasherize(name) %>-create',
     templateUrl: './create.html',
     styleUrls: ['./create.<%= styleext %>']
 })
-export class Create<%= classify(name) %>Page implements OnInit
-{
+export class Create<%= classify(name) %>Page implements OnInit {
 
     model: any = {};
-
     validationsForm: FormGroup;
-
     dirty: boolean = false;
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private formBuilder: FormBuilder,
-                private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService,
-                private _alertService: AlertService) {
-
-    }
-
-    validationMessages = {
-        name: [
-            {type: 'required', message: 'Name is required.'}
+    // Dynamically build validation messages from the fields
+    validationMessages: any = {
+        <% fields.forEach(field => { %>
+            <%= field.name %>: [
+                <% if (field.required) { %>
+                { type: 'required', message: '<%= field.name %> is required.' }
+                <% } %>
         ],
-        description: [
+            <% }); %>
+};
 
-        ]
-    };
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private formBuilder: FormBuilder,
+        private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService,
+        private _alertService: AlertService
+) {}
 
     ngOnInit(): void {
-        this.validationsForm = this.formBuilder.group({
-            name: new FormControl('', Validators.required),
-            description: new FormControl('', Validators.required)
-        });
+        // Build form controls
+        const group: { [key: string]: FormControl } = {};
 
-        this.model['id'] = -1;
-    }
+    <% fields.forEach(field => { %>
+        {
+            const validatorsArr = [];
+            <% if (field.required) { %>
+            validatorsArr.push(Validators.required);
+            <% } %>
 
-    onNameChange($event) {
-        this.model['name'] = $event.currentTarget.value;
+            group['<%= field.name %>'] = new FormControl('', validatorsArr);
+        }
+        <% }); %>
 
+    this.validationsForm = this.formBuilder.group(group);
+
+    // Example of a default ID
+    this.model['id'] = -1;
+}
+
+    onFieldChange(fieldName: string, event: any) {
+        const newValue = event?.detail?.value || event?.target?.value;
+        this.model[fieldName] = newValue;
         this.dirty = true;
     }
 
-    getName() {
-        return this.model['name'];
-    }
+    onSaveBtnClicked() {
+        // If form is invalid, optionally check here.
+        if (!this.validationsForm.valid) {
+            console.warn("Form invalid, cannot save");
+            return;
+        }
 
-    onDescriptionChange($event) {
-        this.model['description'] = $event.currentTarget.value;
-
-        this.dirty = true;
-    }
-
-    getDescription() {
-        return this.model['description'];
-    }
-
-    onSaveBtnClicked()
-    {
-        const self = this;
-
-        self._<%= camelize(name) %>ModelService.save(self.model).then((rtnobj) => {
-            self._alertService.show({
+        this._<%= camelize(name) %>ModelService.save(this.model).then(() => {
+            this._alertService.show({
                 header: 'Alright!',
-                message: "Your <%= classify(name) %> changes were saved!",
-                buttons: [
-                    {
-                        text: 'OK', role: 'cancel', handler: () => {
-                            self.dirty = false;
-                            self.on<%= classify(name) %>sPageBtnClick();
-                        }
-                    }]
-            })
-        })
+                message: `Your <%= classify(name) %> changes were saved!`,
+                buttons: [{
+                    text: 'OK', role: 'cancel', handler: () => {
+                        this.dirty = false;
+                        this.on<%= classify(name) %>sPageBtnClick();
+                    }
+                }]
+            });
+        });
     }
 
     on<%= classify(name) %>sPageBtnClick() {

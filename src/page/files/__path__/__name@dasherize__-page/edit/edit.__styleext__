@@ -1,0 +1,6 @@
+.image-header {
+    img {
+        width: 60px;
+        margin: 0 8px;
+    }
+}

@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { <%= classify(name) %>ModelService } from './_services/<%= dasherize(name) %>.model.service'
-import {Constants} from "../../_constants/constants";
-import {PictureService} from "../../_services/picture/picture.service";
+import { <%= classify(name) %>ModelService } from './_services/<%= dasherize(name) %>.model.service';
+import { Constants } from "../../_constants/constants";
+import { PictureService } from "../../_services/picture/picture.service";
 
 @Component({
   selector: '<%= selector %>',
@@ -12,35 +12,36 @@ import {PictureService} from "../../_services/picture/picture.service";
 })
 export class <%= classify(name) %>Page implements OnInit, OnDestroy {
 
-  modelList: any = [];
+  modelList: any[] = [];
+  fields: any[] = []; // passed in from the schematic
+  listFields: any[] = this.fields.filter(f => f.showInList);
 
-  constructor(private router: Router,
-              private _constants: Constants,
-              private _pictureService: PictureService,
-              private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService) {
+  constructor(
+      private router: Router,
+      private _constants: Constants,
+      private _pictureService: PictureService,
+      private _<%= camelize(name) %>ModelService: <%= classify(name) %>ModelService
+) {}
 
-  }
-
-  public ngOnInit() {
+  ngOnInit() {
+    // Initialize the service data
     this._<%= camelize(name) %>ModelService.init().then((response) => {
       this.modelList = response;
-    })
+    });
   }
 
-  public ngOnDestroy() {
-
-  }
+  ngOnDestroy() {}
 
   getListOf<%= classify(name) %>s() {
     return this._<%= camelize(name) %>ModelService.get();
   }
 
   onCreateBtnClicked() {
-    this.navigateTo("<%= dasherize(name) %>s/create");
+    this.navigateTo("<%= dasherize(name) %>/create");
   }
 
-  on<%= classify(name) %>Click(model) {
-   this.navigateTo("<%= dasherize(name) %>s/" + model['id'])
+  on<%= classify(name) %>Click(model: any) {
+    this.navigateTo("<%= dasherize(name) %>/" + model.id);
   }
 
   onHomeBtnClicked() {

@@ -5,30 +5,29 @@
 </ion-header>
 
 <ion-content padding>
+    <div class="image-header">
+        <img [src]="getAssociatedImage()" (click)="onAssociatedImageClick($event)" (press)="onAssociatedImagePress($event)">
+    </div>
+
     <form [formGroup]="validationsForm" (ngSubmit)="onSaveBtnClicked()">
+        <% fields.forEach(field => { if (['id', 'owner', 'createdAt', 'updatedAt'].includes(field.name)) { return; } %>
         <ion-item>
-            <ion-label position="floating" color="primary">Name</ion-label>
-            <ion-input data-test="name-input" aria-label="name" type="text" formControlName="name" (ionInput)="onNameChange($event)" [value]="getName()" required></ion-input>
+            <ion-label position="floating" color="primary"><%= field.name %></ion-label>
+            <% if (field.type === 'String') { %><ion-input type="text" formControlName="<%= field.name %>" (ionInput)="onFieldChange('<%= field.name %>', $event)"></ion-input>
+            <% } else if (field.type === 'Boolean') { %><ion-checkbox formControlName="<%= field.name %>" (ionChange)="onFieldChange('<%= field.name %>', $event)"></ion-checkbox>
+            <% } else if (field.type === 'LocalDateTime' || field.type === 'Date') { %><ion-datetime formControlName="<%= field.name %>" (ionChange)="onFieldChange('<%= field.name %>', $event)"></ion-datetime>
+            <% } else if (field.type === 'enum') { %><ion-select formControlName="<%= field.name %>" (ionChange)="onFieldChange('<%= field.name %>', $event)">
+            <% field.enumValues && field.enumValues.forEach(ev => { %><ion-select-option value="<%= ev %>"><%= ev %></ion-select-option>
+            <% }); %></ion-select>
+            <% } else if (['Long','Integer','Double','BigDecimal'].includes(field.type)) { %><ion-input type="number" formControlName="<%= field.name %>" (ionInput)="onFieldChange('<%= field.name %>', $event)"></ion-input>
+            <% } else { %>
+            <!-- Generator did not recognize the type [<%= field.type %>]. Defaulting to a text input. -->
+            <ion-input type="text" formControlName="<%= field.name %>" (ionInput)="onFieldChange('<%= field.name %>', $event)"></ion-input><% } %>
         </ion-item>
-        <div class="validation-errors">
-            <ng-container *ngFor="let validation of validationMessages.name">
-                <div class="error-message" *ngIf="validationsForm.get('name').hasError(validation.type) && (validationsForm.get('name').dirty || validationsForm.get('name').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                </div>
-            </ng-container>
-        </div>
-        <ion-item>
-            <ion-label position="floating" color="primary">Description</ion-label>
-            <ion-input data-test="desc-input" type="text" aria-label="description" formControlName="description" (ionInput)="onDescriptionChange($event)" [value]="getDescription()" required></ion-input>
-        </ion-item>
-        <div class="validation-errors">
-            <ng-container *ngFor="let validation of validationMessages.description">
-                <div class="error-message" *ngIf="validationsForm.get('description').hasError(validation.type) && (validationsForm.get('description').dirty || validationsForm.get('description').touched)">
-                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
-                </div>
-            </ng-container>
-        </div>
+        <% }) %>
+        <!-- TODO: Show validation errors if desired -->
+
+        <ion-button (click)="on<%= classify(name) %>sPageBtnClick()">Cancel</ion-button>
+        <ion-button type="submit">Save</ion-button>
     </form>
-    <ion-button (click)="on<%= classify(name) %>sPageBtnClick()">Cancel</ion-button>
-    <ion-button (click)="onSaveBtnClicked()">Save</ion-button>
 </ion-content>

@@ -7,31 +7,22 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
+
 <ion-content>
     <ion-card>
         <ion-card-header>
-            <ion-card-title>{{model.name}}</ion-card-title>
+            <ion-card-title>{{ model.title }}</ion-card-title>
         </ion-card-header>
+
         <ion-card-content>
+            <% fields.forEach(field => { if (['id', 'owner'].includes(field.name)) { return; } %>
             <ion-item>
-                <ion-textarea aria-label="Details & Description" [(ngModel)]="model.description" [disabled]="!isEditBtnEnabled()"></ion-textarea>
+                <ion-label><%= field.name %></ion-label>
+                <% if (field.type === 'Boolean') { %><ion-text>{{ model.<%= field.name %> ? 'Yes' : 'No' }}</ion-text>
+                <% } else if (field.type === 'LocalDateTime' || field.type === 'Date') { %><ion-text>{{ model.<%= field.name %> | date:'short' }}</ion-text>
+                <% } else { %><ion-text>{{ model.<%= field.name %> }}</ion-text><% } %>
             </ion-item>
-            <ion-item>
-                <ul class="single-row-list">
-                    <li><div class="single-row-list">
-                        <span class="createdBySpan">Created By:</span>
-                        <div class="createdByAvatar">
-                            <img [src]="getAssociatedImage(model)"/>
-                        </div>
-                        <div class="usernameInAList">
-                            {{model.userName}}
-                        </div>
-                    </div>
-                    </li>
-                    <li>Created {{getCreatedTime()}}</li>
-                    <li>Updated {{getLastUpdatedTime()}}</li>
-                </ul>
-            </ion-item>
+            <% }) %>
         </ion-card-content>
     </ion-card>
 </ion-content>
@@ -39,7 +30,7 @@
 <ion-footer>
     <ion-toolbar id="bottom-toolbar" color="light">
         <ion-button (click)="onHomeBtnClick()" fill="clear"><ion-icon name="home-outline"></ion-icon></ion-button>
-        <ion-button (click)="on<%= classify(name) %>sPageBtnClick()" fill="clear"><ion-icon name="question-mark"></ion-icon></ion-button>
+        <ion-button (click)="onNavigateToList()" fill="clear"><ion-icon name="list"></ion-icon></ion-button>
         <ion-button (click)="onEditBtnClick()" [disabled]="!isEditBtnEnabled()" fill="clear"><ion-icon name="pencil"></ion-icon></ion-button>
     </ion-toolbar>
 </ion-footer>

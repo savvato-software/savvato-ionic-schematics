@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { AuthService } from "@savvato-software/savvato-javascript-services";
-
 import * as moment from 'moment';
-import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service'
-import {PictureService} from "../../../_services/picture/picture.service";
-import {Constants} from "../../../_constants/constants";
+
+import { <%= classify(name) %>ModelService } from '../_services/<%= dasherize(name) %>.model.service';
+import { PictureService } from '../../../_services/picture/picture.service';
+import { Constants } from '../../../_constants/constants';
+import { AuthService } from '@savvato-software/savvato-javascript-services';
 
 @Component({
     selector: '<%= selector %>-detail',
@@ -16,36 +16,41 @@ import {Constants} from "../../../_constants/constants";
 export class Detail<%= classify(name) %>Page implements OnInit {
 
     id: number;
+    model: any = {};
+    fields: any[] = <%= JSON.stringify(fields) %>;
+    pageTitle: string = "<%= classify(name) %>";
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private _location: Location,
-                private _constants: Constants,
-                private _pictureService: PictureService,
-                private _<%= dasherize(name) %>ModelService: <%= classify(name) %>ModelService,
-                private _authService: AuthService) {
-
-    }
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private _location: Location,
+        private _constants: Constants,
+        private _pictureService: PictureService,
+        private _<%= dasherize(name) %>ModelService: <%= classify(name) %>ModelService,
+        private _authService: AuthService
+) {}
 
     ngOnInit(): void {
-        const self = this;
-
-        self.route.params.subscribe((params: any) => {
-            self.id = Number(params['id']);
+        this.route.params.subscribe((params: any) => {
+            this.id = Number(params['id']);
+            this.model = this._<%= dasherize(name) %>ModelService.getById(this.id) || {};
         });
-
-    }
-
-    get model() {
-        return this._<%= dasherize(name) %>ModelService.getById(this.id);
     }
 
     isEditBtnEnabled() {
-        return this._<%= dasherize(name) %>ModelService.getById(this.id)['userId'] === this._authService.getUser()['id'];
+        return this.model && (this.model['userId'] === this._authService.getUser()['id']);
     }
 
     onEditBtnClick() {
-        this.navigateTo("/<%= dasherize(name) %>s/edit/" + this.id)
+        this.navigateTo(`/<%= dasherize(name) %>s/edit/${this.id}`);
+    }
+
+    onNavigateToList() {
+        this.navigateTo(`/<%= dasherize(name) %>s`);
+    }
+
+    onHomeBtnClick() {
+        this.navigateTo("/home");
     }
 
     navigateTo(url?: string) {
@@ -53,25 +58,15 @@ export class Detail<%= classify(name) %>Page implements OnInit {
         this.router.navigate([url], { replaceUrl: true });
     }
 
-    on<%= classify(name) %>sPageBtnClick() {
-        this.navigateTo("/<%= dasherize(name) %>s")
-    }
-
-    onHomeBtnClick() {
-        this.navigateTo("/home")
-    }
-
-    getAssociatedImage(model) {
-        const PHOTO_SIZE = 50; // does this even mean anything?
-        let rtn = this._pictureService.getAssociatedImage(this._constants.PHOTO_TYPE_PROFILE, model, PHOTO_SIZE);
-        return rtn && rtn['url'];
-    }
-
     getCreatedTime() {
-        return moment.unix(this.model['created'] / 1000).fromNow();
+        return this.model && this.model['created']
+            ? moment.unix(this.model['created'] / 1000).fromNow()
+            : 'N/A';
     }
 
     getLastUpdatedTime() {
-        return moment.unix(this.model['lastUpdated'] / 1000).fromNow();
+        return this.model && this.model['updated']
+            ? moment.unix(this.model['updated'] / 1000).fromNow()
+            : 'N/A';
     }
 }
