@@ -59,10 +59,12 @@ export class <%= classify(name) %>ModelService extends ModelTransformingServiceP
     }
 
     getById(id) {
-        if (this.model[id])
-            return this.model[id];
-        else
-            return this._functionService.getLastResult(this.funcKey, {id: id});
+        let rtn = this.model['all'] && this.model['all'].find(m => m.id === id)
+
+        if (!rtn)
+            rtn = this._functionService.getLastResult(this.funcKey, {id: id});
+
+        return rtn;
     }
 
     save(model) {
